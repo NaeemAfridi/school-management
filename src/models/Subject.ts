@@ -11,6 +11,7 @@ export interface ISubject extends Document {
   description?: string;
   credits?: number;
   category: "core" | "elective" | "lab" | "extracurricular";
+  classes: mongoose.Types.ObjectId[];
   passingMarks?: number;
   totalMarks?: number;
   isActive: boolean;
@@ -36,6 +37,7 @@ const SubjectSchema = new Schema<ISubject>(
       type: Number,
       min: 0,
     },
+    classes: [{ type: Schema.Types.ObjectId, ref: "Class" }],
     category: {
       type: String,
       enum: ["core", "elective", "lab", "extracurricular"],
