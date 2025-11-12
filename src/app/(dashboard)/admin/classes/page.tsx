@@ -22,6 +22,7 @@ export default function ClassesPage() {
   const fetchClasses = useCallback(async () => {
     try {
       setLoading(true);
+      setError(null);
       const { data } = await axios.get("/api/classes");
       setClasses(data.data || []);
     } catch (err: unknown) {
@@ -49,16 +50,9 @@ export default function ClassesPage() {
     }
   };
 
-  const handleView = (cls: ClassType) => {
-    console.log("View", cls);
-  };
-
   useEffect(() => {
     fetchClasses();
   }, [fetchClasses]);
-
-  if (loading) return <p>Loading classes...</p>;
-  if (error) return <p className="text-red-500">{error}</p>;
 
   return (
     <div className="space-y-6">
@@ -83,8 +77,34 @@ export default function ClassesPage() {
             <th className="p-3">Actions</th>
           </tr>
         </thead>
+
         <tbody>
-          {classes.length > 0 ? (
+          {loading && (
+            <tr>
+              <td className="p-4 text-center text-muted-foreground" colSpan={6}>
+                Loading classes...
+              </td>
+            </tr>
+          )}
+
+          {!loading && error && (
+            <tr>
+              <td className="p-4 text-center text-red-500" colSpan={6}>
+                {error}
+              </td>
+            </tr>
+          )}
+
+          {!loading && !error && classes.length === 0 && (
+            <tr>
+              <td className="p-4 text-center text-muted-foreground" colSpan={6}>
+                No classes available.
+              </td>
+            </tr>
+          )}
+
+          {!loading &&
+            !error &&
             classes.map((cls) => (
               <tr
                 key={cls._id}
@@ -97,7 +117,7 @@ export default function ClassesPage() {
                 <td className="p-3">{cls.students.length}</td>
                 <td className="p-3 flex gap-2">
                   <button
-                    onClick={() => handleView(cls)}
+                    onClick={() => console.log("View", cls)}
                     className="text-blue-600 hover:underline"
                   >
                     View
@@ -116,14 +136,7 @@ export default function ClassesPage() {
                   </button>
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td className="p-4 text-center text-muted-foreground" colSpan={6}>
-                No classes found
-              </td>
-            </tr>
-          )}
+            ))}
         </tbody>
       </table>
     </div>

@@ -14,6 +14,11 @@ import {
   Settings,
   Loader2,
   type LucideIcon,
+  GraduationCap,
+  UserCog,
+  FileText,
+  Wallet,
+  CalendarClock,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -48,6 +53,12 @@ const menuConfig: Record<
     { name: "Dashboard", href: "/admin", icon: Home },
     { name: "Manage Users", href: "/admin/users", icon: Users },
     { name: "Classes", href: "/admin/classes", icon: BookOpen },
+    { name: "Subjects", href: "/admin/subjects", icon: GraduationCap },
+    { name: "Students", href: "/admin/students", icon: Users },
+    { name: "Teachers", href: "/admin/teachers", icon: UserCog },
+    { name: "Exams", href: "/admin/exams", icon: FileText },
+    { name: "Fees", href: "/admin/fees", icon: Wallet },
+    { name: "Timetable", href: "/admin/timetable", icon: CalendarClock },
     { name: "Reports", href: "/admin/reports", icon: BarChart3 },
     { name: "Settings", href: "/admin/settings", icon: Settings },
   ],
